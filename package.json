@@ -15,7 +15,7 @@
     "build": "bili",
     "prepublishOnly": "npm run build",
     "coverage": "jest --coverage",
-    "test": "cross-env NODE_ENV=test jest --verbose=false --silent=false --passWithNoTests ",
+    "test": "cross-env NODE_ENV=test jest --verbose=false --silent=false --passWithNoTests",
     "test:dev": "cross-env NODE_ENV=test jest --watchAll",
     "prettier": "prettier  --write **/*.{ts,js}",
     "lint:ts": "npm run prettier && tslint -c tslint.json -t stylish --fix {src}/**/*.{ts}"
