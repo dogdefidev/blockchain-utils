@@ -77,6 +77,7 @@ async function checkMergePublish() {
   // package.json is greater than the latest version in registry or no version
   // published there. In case of NPM failure, merge will still be possible,
   // but no publish will be performed.
+  console.log(`Last Published Version: Version: ${version} - Ok? ${ok} - Message: ${msg}`);
   if (ok) {
     if (version) {
       ret = {
