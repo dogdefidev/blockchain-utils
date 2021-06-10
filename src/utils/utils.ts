@@ -21,3 +21,6 @@ export const toUnits = (amount: BigNumberJS, decimals: number) => {
 export const shortAddress = (address: string, length:number = 6) => {
     return address.substr(0, length) + '...' + address.substr(address.length - length);
 };
+
+export const stringToBytes32 = (ethers: any, value: string) =>
+    ethers.utils.formatBytes32String(value);

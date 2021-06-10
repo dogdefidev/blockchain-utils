@@ -4,7 +4,7 @@
 import {Contract} from "ethers";
 import {INTERFACE_ERC20_NAME} from "../utils/consts";
 
-export abstract class GetContracts {
+export abstract class GetContractsBase {
     constructor(protected ethers: any) {}
 
     protected async getContractAt(name: string, address: string): Promise<Contract> {
