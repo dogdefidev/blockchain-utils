@@ -26,7 +26,7 @@ jobs:
       - name: Running tests
         run: yarn test
       - name: Publish to NPM
-        if: ${{ endsWith(steps.will_publish.outputs.RESULT, '!!_DO_PUBLISH_!!') }}
+        #if: ${{ endsWith(steps.will_publish.outputs.RESULT, '!!_DO_PUBLISH_!!') }}
         run: |
           npm config set scripts-prepend-node-path auto
           yarn publish --non-interactive
