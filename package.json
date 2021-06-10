@@ -11,9 +11,6 @@
   "files": [
     "dist"
   ],
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "build": "bili",
     "prepublishOnly": "npm run build",
