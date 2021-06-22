@@ -6,10 +6,10 @@
 import _ from "lodash";
 
 export type ETH_NETWORKS = 'eth_mainnet' |
-    'rinkeby' |
-    'ropsten' |
-    'kovan' |
-    'goerli';
+    'eth_rinkeby' |
+    'eth_ropsten' |
+    'eth_kovan' |
+    'eth_goerli';
 
 export type BSC_NETWORKS = 
     'bsc_mainnet' |
@@ -26,10 +26,15 @@ export type NETWORKS =
 
 export const getAllNetworks = () => {
     const map = new Map<NETWORKS, Explorer>();
-    map.set('rinkeby', Explorer.rinkeby());
+    map.set('eth_mainnet', Explorer.eth_mainnet());
+    map.set('eth_rinkeby', Explorer.eth_rinkeby());
+    map.set('eth_ropsten', Explorer.eth_ropsten());
+    map.set('eth_kovan', Explorer.eth_kovan());
+    map.set('eth_goerli', Explorer.eth_goerli());
     map.set("bsc_testnet", Explorer.bsc_testnet());
     map.set("bsc_mainnet", Explorer.bsc_mainnet());
     map.set("ftm_mainnet", Explorer.fantom_mainnet());
+    map.set("ftm_testnet", Explorer.fantom_testnet());
     return map;
 };
 
@@ -84,7 +89,27 @@ export class Explorer {
         return new Explorer(`ftmscan.com`);
     }
 
-    static rinkeby(): Explorer {
+    static fantom_testnet(): Explorer {
+        return new Explorer(`fantom.network`, 'explorer.testnet');
+    }
+
+    static eth_rinkeby(): Explorer {
         return new Explorer(`etherscan.io`, "rinkeby");
+    }
+
+    static eth_ropsten(): Explorer {
+        return new Explorer(`etherscan.io`, "ropsten");
+    }
+
+    static eth_kovan(): Explorer {
+        return new Explorer(`etherscan.io`, "kovan");
+    }
+
+    static eth_goerli(): Explorer {
+        return new Explorer(`etherscan.io`, "goerli");
+    }
+
+    static eth_mainnet(): Explorer {
+        return new Explorer(`etherscan.io`, "www");
     }
 }
