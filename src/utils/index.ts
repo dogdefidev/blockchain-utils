@@ -5,3 +5,4 @@
 /* eslint-disable import/prefer-default-export */
 export * from "./consts";
 export * from "./utils";
+export * from "./deployment";

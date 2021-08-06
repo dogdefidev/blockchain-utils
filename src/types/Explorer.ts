@@ -19,10 +19,18 @@ export type FTM_NETWORKS =
     'ftm_mainnet' |
     'ftm_testnet';
 
+export type DEV_NETWORKS = 
+    'dev_testnet' |
+    'dev' |
+    'development' |
+    'localhost' |
+    'local';
+
 export type NETWORKS = 
     ETH_NETWORKS |
     BSC_NETWORKS |
-    FTM_NETWORKS;
+    FTM_NETWORKS |
+    DEV_NETWORKS;
 
 export const getAllNetworks = () => {
     const map = new Map<NETWORKS, Explorer>();
@@ -38,13 +46,19 @@ export const getAllNetworks = () => {
     return map;
 };
 
-export const getNetworkExplorer = (network: NETWORKS) => {
-    const explorers = getAllNetworks();
+export const getNetworkExplorer = (network: NETWORKS, customNetworks: Map<NETWORKS, Explorer>) => {
+    const explorers = new Map([...Array.from(customNetworks.entries()), ...Array.from(getAllNetworks())]);
     if (!explorers.has(network)) {
         throw new Error(`Explorer not found. Network: ${network}`);
     }
     return explorers.get(network) as Explorer;
 };
+
+export const customExplorer = (name: NETWORKS, explorer: Explorer): Map<NETWORKS, Explorer> => {
+    const map = new Map<NETWORKS, Explorer>();
+    map.set(name, explorer);
+    return map;
+}
 
 export class Explorer {
     private constructor(
@@ -54,7 +68,7 @@ export class Explorer {
     ) {}
 
     getBaseUrl(): string {
-        return `${this.protocol}${this.network}.${this.baseUrl}`;
+        return `${this.protocol}${this.network}${this.baseUrl}`;
     }
 
     getAddress(address: string): string {
@@ -78,38 +92,42 @@ export class Explorer {
     }
 
     static bsc_mainnet(): Explorer {
-        return new Explorer(`bscscan.com`);
+        return new Explorer(`.bscscan.com`);
     }
 
     static bsc_testnet(): Explorer {
-        return new Explorer(`bscscan.com`, "testnet");
+        return new Explorer(`.bscscan.com`, "testnet");
     }
 
     static fantom_mainnet(): Explorer {
-        return new Explorer(`ftmscan.com`);
+        return new Explorer(`.ftmscan.com`);
     }
 
     static fantom_testnet(): Explorer {
-        return new Explorer(`fantom.network`, 'explorer.testnet');
+        return new Explorer(`.fantom.network`, 'explorer.testnet');
     }
 
     static eth_rinkeby(): Explorer {
-        return new Explorer(`etherscan.io`, "rinkeby");
+        return new Explorer(`.etherscan.io`, "rinkeby");
     }
 
     static eth_ropsten(): Explorer {
-        return new Explorer(`etherscan.io`, "ropsten");
+        return new Explorer(`.etherscan.io`, "ropsten");
     }
 
     static eth_kovan(): Explorer {
-        return new Explorer(`etherscan.io`, "kovan");
+        return new Explorer(`.etherscan.io`, "kovan");
     }
 
     static eth_goerli(): Explorer {
-        return new Explorer(`etherscan.io`, "goerli");
+        return new Explorer(`.etherscan.io`, "goerli");
     }
 
     static eth_mainnet(): Explorer {
-        return new Explorer(`etherscan.io`, "www");
+        return new Explorer(`.etherscan.io`, "www");
+    }
+
+    static custom(ip: string, port: number, protocol: string = 'http://'): Explorer {
+        return new Explorer(`:${port}`, ip, protocol);
     }
 }

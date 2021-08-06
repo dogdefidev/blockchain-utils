@@ -1,6 +1,7 @@
 export * from "./AccountIndex";
 export * from "./Accounts";
 export * from "./Amount";
+export * from "./ContractDeployed";
 export * from "./ContractInfo";
 export * from "./Explorer";
 export * from "./GetContractsBase";

@@ -1,4 +1,4 @@
-import { EMPTY_ADDRESS } from 'utils';
+import { EMPTY_ADDRESS, EMPTY_STRING } from 'utils';
 
 export type ContractInfo = {
   name: string;
@@ -7,7 +7,7 @@ export type ContractInfo = {
 };
 
 export const EMPTY_CONTRACT_INFO: ContractInfo = {
-  name: 'Empty',
+  name: EMPTY_STRING,
   address: EMPTY_ADDRESS,
   url: '',
 };
