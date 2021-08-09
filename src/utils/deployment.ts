@@ -3,6 +3,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-param-reassign */
 
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {Contract} from "ethers";
 import { ContractDeployed, Explorer, getNetworkExplorer, NETWORKS } from "types";
 import { EMPTY_ADDRESS } from "./consts";
@@ -26,7 +27,7 @@ export const deployContract = async (
     );
     const argsAsString = args.map((arg) => arg.toString()).join(" ");
     const contractDeployer = await params.ethers.getContractFactory(name);
-    console.log(`${name}: deploying with args: ${argsAsString}`);
+    console.log(`${name}: deploying with args: '${argsAsString}'`);
     const contract = await contractDeployer.connect(deployer).deploy(...args);
     console.log(`Contract deployed at address: ${contract.address}`);
     await contract.deployed();
@@ -40,6 +41,31 @@ export const deployContract = async (
     });
     console.log();
     return contract as Contract;
+};
+
+export const deployInitializableContract = async (
+    params: {
+        network: string;
+        ethers: any;
+        contracts: ContractDeployed[];
+        customNetworks?: Map<NETWORKS, Explorer>;
+        deployer: SignerWithAddress;
+    },
+    name: string,
+    args: any[],
+    initializer: string,
+): Promise<Contract> => {
+    const explorer = getNetworkExplorer(
+        params.network as NETWORKS,
+        params.customNetworks || new Map<NETWORKS, Explorer>()
+    );
+    const contract = await deployContract(params, name, params.deployer, []);
+    console.log(`Initializing contract ${name}.${initializer} with params '${args}'.`);
+    const result = await contract[initializer](...args);
+    const receipt = await result.wait();
+    explorer.printTx('Contract initialized at tx: ', receipt.transactionHash);
+    console.log();
+    return contract;
 };
 
 
@@ -59,7 +85,7 @@ export const addContractInfo = async (
         params.customNetworks || new Map<NETWORKS, Explorer>()
     );
     const argsAsString = args.map((arg) => arg.toString()).join(" ");
-    console.log(`${name}: deploying with args: ${argsAsString}`);
+    console.log(`${name}: deploying with args: '${argsAsString}'`);
     console.log(`Contract deployed at address: ${contract.address}`);
     const contractUrl = explorer.getAddress(contract.address);
     explorer.printAddress(`Contract URL: `, contract.address);
@@ -88,7 +114,7 @@ export const addTemplateContractInfo = async (
         params.customNetworks || new Map<NETWORKS, Explorer>()
     );
     const argsAsString = args.map((arg) => arg.toString()).join(" ");
-    console.log(`${name}: template with args: ${argsAsString}`);
+    console.log(`${name}: template with args: '${argsAsString}'`);
     const contractAddress = EMPTY_ADDRESS;
     const url = explorer.getAddress(contractAddress);
     params.contracts.push({
@@ -128,6 +154,8 @@ export const deployTransparentProxy = async (
         args,
         options,
     );
+    const deployTx = proxy.deployTransaction;
+    await deployTx.wait();
     console.log(`${name}Proxy: deployed at address: ${explorer.getAddress(proxy.address)}`);
     
     await addContractInfo(params, proxyName, proxy, args);
