@@ -3,6 +3,7 @@ export * from "./Accounts";
 export * from "./Amount";
 export * from "./ContractDeployed";
 export * from "./ContractInfo";
+export * from "./ExpectedInfo";
 export * from "./Explorer";
 export * from "./GetContractsBase";
 export * from "./loggers";

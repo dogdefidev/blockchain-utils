@@ -19,6 +19,10 @@ export type FTM_NETWORKS =
     'ftm_mainnet' |
     'ftm_testnet';
 
+export type ARB_NETWORKS = 
+    'arb_mainnet' |
+    'arb_testnet';
+
 export type DEV_NETWORKS = 
     'dev_testnet' |
     'dev' |
@@ -30,6 +34,7 @@ export type NETWORKS =
     ETH_NETWORKS |
     BSC_NETWORKS |
     FTM_NETWORKS |
+    ARB_NETWORKS |
     DEV_NETWORKS;
 
 export const getAllNetworks = () => {
@@ -43,6 +48,8 @@ export const getAllNetworks = () => {
     map.set("bsc_mainnet", Explorer.bsc_mainnet());
     map.set("ftm_mainnet", Explorer.fantom_mainnet());
     map.set("ftm_testnet", Explorer.fantom_testnet());
+    map.set("arb_mainnet", Explorer.fantom_mainnet());
+    map.set("arb_testnet", Explorer.fantom_testnet());
     return map;
 };
 
@@ -89,6 +96,14 @@ export class Explorer {
 
     printAddress(title: string, address: string) {
         console.log(`${title}: ${this.getAddress(address)}`);
+    }
+
+    static arbitrum_mainnet(): Explorer {
+        return new Explorer('.arbitrum.io', 'explorer');
+    }
+
+    static arbitrum_testnet(): Explorer {
+        return new Explorer('.arbitrum.io/#/', 'rinkeby-explorer');
     }
 
     static bsc_mainnet(): Explorer {
