@@ -48,8 +48,8 @@ export const getAllNetworks = () => {
     map.set("bsc_mainnet", Explorer.bsc_mainnet());
     map.set("ftm_mainnet", Explorer.fantom_mainnet());
     map.set("ftm_testnet", Explorer.fantom_testnet());
-    map.set("arb_mainnet", Explorer.fantom_mainnet());
-    map.set("arb_testnet", Explorer.fantom_testnet());
+    map.set("arb_mainnet", Explorer.arbitrum_mainnet());
+    map.set("arb_testnet", Explorer.arbitrum_testnet());
     return map;
 };
 
