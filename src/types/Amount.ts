@@ -11,7 +11,7 @@ export class Amount {
     private constructor(private amount: string) {}
 
     getNumber(): number {
-        return parseInt(this.amount);
+        return parseFloat(this.amount);
     }
 
     getBigNumber(): BigNumberJS {
