@@ -1,6 +1,6 @@
 {
   "name": "@dogdefidev/utils",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Some useful classes and functions to use in blockchain dapps.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -63,7 +63,7 @@
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
     "chai": "^4.2.0",
-    "ethers": "^5.2.0",
+    "ethers": "^5.1.2",
     "lodash": "^4.17.21"
   },
   "husky": {
