@@ -55,8 +55,8 @@ export const getAllNetworks = () => {
     map.set("ftm_testnet", Explorer.fantom_testnet());
     map.set("arb_mainnet", Explorer.arbitrum_mainnet());
     map.set("arb_testnet", Explorer.arbitrum_testnet());
-    map.set("poly_mainnet", Explorer.arbitrum_mainnet());
-    map.set("poly_testnet", Explorer.arbitrum_testnet());
+    map.set("poly_mainnet", Explorer.polygon_mainnet());
+    map.set("poly_testnet", Explorer.polygon_testnet());
     return map;
 };
 
