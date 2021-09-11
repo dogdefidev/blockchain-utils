@@ -23,6 +23,10 @@ export type ARB_NETWORKS =
     'arb_mainnet' |
     'arb_testnet';
 
+export type POLYGON_NETWORKS = 
+    'poly_mainnet' |
+    'poly_testnet';
+
 export type DEV_NETWORKS = 
     'dev_testnet' |
     'dev' |
@@ -35,6 +39,7 @@ export type NETWORKS =
     BSC_NETWORKS |
     FTM_NETWORKS |
     ARB_NETWORKS |
+    POLYGON_NETWORKS |
     DEV_NETWORKS;
 
 export const getAllNetworks = () => {
@@ -50,6 +55,8 @@ export const getAllNetworks = () => {
     map.set("ftm_testnet", Explorer.fantom_testnet());
     map.set("arb_mainnet", Explorer.arbitrum_mainnet());
     map.set("arb_testnet", Explorer.arbitrum_testnet());
+    map.set("poly_mainnet", Explorer.arbitrum_mainnet());
+    map.set("poly_testnet", Explorer.arbitrum_testnet());
     return map;
 };
 
@@ -98,12 +105,20 @@ export class Explorer {
         console.log(`${title}: ${this.getAddress(address)}`);
     }
 
+    static polygon_mainnet(): Explorer {
+        return new Explorer('.polygonscan.com');
+    }
+
+    static polygon_testnet(): Explorer {
+        return new Explorer('.polygonscan.com', 'mumbai');
+    }
+
     static arbitrum_mainnet(): Explorer {
-        return new Explorer('.arbitrum.io', 'explorer');
+        return new Explorer('.arbiscan.io');
     }
 
     static arbitrum_testnet(): Explorer {
-        return new Explorer('.arbitrum.io/#/', 'rinkeby-explorer');
+        return new Explorer('.arbitrum.io', 'rinkeby-explorer');
     }
 
     static bsc_mainnet(): Explorer {
